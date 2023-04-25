@@ -78,7 +78,8 @@ page 50004 "Sharepoint File List"
                     OS.Write('Testing file contents');
                     IS := TempBlob.CreateInStream();
 
-                    SharepointMgt.SaveFile(ParentFolderURL, 'New File.txt', IS);
+                    if SharepointMgt.SaveFile(ParentFolderURL, 'New File.txt', IS) then
+                        Message('File created successfully!');
                 end;
             }
         }
@@ -93,7 +94,7 @@ page 50004 "Sharepoint File List"
         if ParentFolderURL <> '' then begin
             SharepointMgt.GetFilesFromServerRelativeURL(ParentFolderURL, SharepointFolder, SharepointFile);
         end else begin
-            SharepointMgt.GetDocumentsRootFiles(SharepointFolder, SharepointFile);
+            ParentFolderURL := SharepointMgt.GetDocumentsRootFiles(SharepointFolder, SharepointFile);
         end;
 
         if SharepointFolder.FindSet() then begin

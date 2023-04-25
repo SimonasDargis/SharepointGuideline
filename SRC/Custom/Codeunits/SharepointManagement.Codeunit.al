@@ -49,7 +49,7 @@ codeunit 50000 "Sharepoint Management"
             Error(FileNotFoundErr);
     end;
 
-    procedure GetDocumentsRootFiles(var SharepointFolder: Record "SharePoint Folder" temporary; var SharepointFile: Record "SharePoint File")
+    procedure GetDocumentsRootFiles(var SharepointFolder: Record "SharePoint Folder" temporary; var SharepointFile: Record "SharePoint File"): Text
     var
         SharePointList: Record "SharePoint List" temporary;
     begin
@@ -65,6 +65,7 @@ codeunit 50000 "Sharepoint Management"
                     SharePointClient.GetFolderFilesByServerRelativeUrl(SharePointFolder."Server Relative Url", SharePointFile);
                     SharePointClient.GetSubFoldersByServerRelativeUrl(SharePointFolder."Server Relative Url", SharePointFolder);
                     //You may loop through the records and create your own table to store both files and folders
+                    exit(SharePointFolder."Server Relative Url"); //Exits with the root server relative URL
                 end;
             end;
         end;
